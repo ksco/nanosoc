@@ -17,4 +17,4 @@
 `define FUNCT3_ORI   3'b110
 `define FUNCT3_ANDI  3'b111
 `define FUNCT3_SLLI  3'b001
-`define FUNCT3_SRLI  3'b101
+`define FUNCT3_SRI  3'b101

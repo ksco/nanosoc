@@ -1,7 +1,7 @@
 IVERILOG = iverilog -s $@_test_bench -o $@_tb.out testbench/$@_tb.v
 VVP = vvp $@_tb.out
 
-core_modules = id if_id pcreg regs
+core_modules = id if_id pcreg regs ex
 perips_modules = ram
 utils_modules = gen_dff
 

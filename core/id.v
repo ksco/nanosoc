@@ -34,7 +34,7 @@ always @ (*) begin
             case (funct3)
                 `FUNCT3_ADDI, `FUNCT3_SLTI, `FUNCT3_SLTIU,
                 `FUNCT3_XORI, `FUNCT3_ORI, `FUNCT3_ANDI,
-                `FUNCT3_SLLI, `FUNCT3_SRLI: begin
+                `FUNCT3_SLLI, `FUNCT3_SRI: begin
                     reg_waddr_o = rd;
                     reg1_raddr_o = rs1;
                     reg2_raddr_o = 5'h0;

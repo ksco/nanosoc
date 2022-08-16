@@ -157,6 +157,23 @@ module id_test_bench;
                 $display("[TIME ", $time, "] NG");
             end
         end
+
+        #1 begin
+            id_1_inst_i = 32'h4098d813; // srai  x16, x17, 9
+            id_1_inst_addr_i = 32'h123;
+            id_1_reg1_rdata_i = 32'h42;
+            id_1_reg2_rdata_i = 32'h69;
+        end
+        #1 begin
+            if (id_1_op1_o == 32'h42 && id_1_op2_o == 32'h409 &&
+                id_1_reg1_raddr_o == 5'h11 && id_1_reg2_raddr_o == 5'h0 &&
+                id_1_reg_waddr_o == 5'h10) begin
+                $display("[TIME ", $time, "] OK");
+            end else begin
+                $display("[TIME ", $time, "] NG");
+            end
+        end
+
         #1 begin
             $finish;
         end
