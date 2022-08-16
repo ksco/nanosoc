@@ -1,31 +1,28 @@
-all: pc_reg regs gen_dff if_id id ram
+IVERILOG = iverilog -s $@_test_bench -o $@_tb.out testbench/$@_tb.v
+VVP = vvp $@_tb.out
 
-pc_reg:
-	iverilog -s pc_reg_test_bench -o pcreg_tb.out testbench/pcreg_tb.v core/pcreg.v
-	vvp pcreg_tb.out
+core_modules = id if_id pcreg regs
+perips_modules = ram
+utils_modules = gen_dff
 
-regs:
-	iverilog -s regs_test_bench -o regs_tb.out testbench/regs_tb.v core/regs.v
-	vvp regs_tb.out
+require_gen_dff = if_id
 
-gen_dff:
-	iverilog -s gen_dff_test_bench -o gen_dff_tb.out testbench/gen_dff_tb.v utils/gen_dff.v
-	vvp gen_dff_tb.out
+all: test
 
-if_id:
-	iverilog -s if_id_test_bench -o if_id_tb.out testbench/if_id_tb.v core/if_id.v utils/gen_dff.v
-	vvp if_id_tb.out
+test: $(utils_modules) $(core_modules) $(perips_modules)
 
-id:
-	iverilog -s id_test_bench -o id_tb.out testbench/id_tb.v core/defines.v core/id.v
-	vvp id_tb.out
+$(core_modules):
+	${IVERILOG} core/$@.v $$(echo $(require_gen_dff) | grep -w -q $@ && echo utils/gen_dff.v)
+	${VVP}
 
-ram:
-	iverilog -s ram_test_bench -o ram_tb.out testbench/ram_tb.v perips/ram.v
-	vvp ram_tb.out
+$(perips_modules):
+	${IVERILOG} perips/$@.v
+	${VVP}
+
+$(utils_modules):
+	${IVERILOG} utils/$@.v
+	${VVP}
 
 clean:
 	rm -rf *.out
 	rm -rf *.vcd
-
-.PHONY: all clean

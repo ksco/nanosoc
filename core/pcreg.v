@@ -1,4 +1,4 @@
-module pc_reg(
+module pcreg(
     input wire clk,
     input wire rst_,
 

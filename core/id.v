@@ -1,4 +1,4 @@
-`include "core/defines.v"
+`include "utils/defines.v"
 
 module id(
     input wire[31:0] inst_i,
